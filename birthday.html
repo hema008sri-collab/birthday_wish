@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #cce7ff, #e6f7ff);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      min-height: 100vh;
+      overflow-y: auto;
+      font-family: 'Source Sans Pro', sans-serif;
+    }
+
+    h1 {
+      color: #1e90ff;
+      font-size: 2.5em;
+      font-weight: 900;
+      text-align: center;
+      animation: pulse 2s infinite ease-in-out;
+      margin-top: 20px;
+    }
+
+    h2 {
+      color: #4682b4;
+      font-size: 1.5em;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); text-shadow: 0 0 10px #87ceeb; }
+      50% { transform: scale(1.05); text-shadow: 0 0 20px #1e90ff; }
+    }
+
+    button {
+      padding: 12px 25px;
+      font-size: 1em;
+      background: #87cefa;
+      color: #333;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: transform 0.3s;
+      margin-top: 20px;
+    }
+
+    button:hover { transform: scale(1.1); background: #1e90ff; color: white; }
+
+    .photo-frame {
+      border: 4px solid #87ceeb;
+      border-radius: 50%;
+      padding: 5px;
+      box-shadow: 0 0 20px #b0e0e6;
+      margin-top: 20px;
+      background: white;
+    }
+
+    .photo-frame img {
+      border-radius: 50%;
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .message {
+      color: #333;
+      font-size: 1.2em;
+      margin-top: 30px;
+      text-align: center;
+      max-width: 90%;
+      line-height: 1.5;
+      min-height: 100px;
+    }
+
+    .sentence {
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Finale style */
+    .finale {
+      font-size: 2em;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+      background: linear-gradient(90deg, gold, red);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Stars */
+    .star {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* Balloons */
+    .balloon {
+      position: absolute;
+      width: 40px;
+      height: 60px;
+      border-radius: 50%;
+      background: red;
+      animation: floatUp 10s linear infinite;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 2px;
+      height: 20px;
+      background: #555;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh); opacity: 1; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      h2 { font-size: 1.2em; }
+      .photo-frame img { width: 120px; height: 120px; }
+      .message { font-size: 1em; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Happpyyyy Happpyyyy Happyyyy Birthday!</h1>
+  <h2>💙 JUUGGUUU 💙</h2>
+
+  <div class="photo-frame">
+    <img src="your-photo.jpg" alt="Birthday Person">
+  </div>
+
+  <button onclick="showMessage()">Click for a Sweet Surprise</button>
+
+  <div class="message" id="message"></div>
+
+  <audio id="birthdaySong" loop>
+    <source src="HACK/arz.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const sentences = [
+      "💙 May your journey be as vast as the sky, filled with adventures waiting to unfold.",
+      "🌌 May your dreams shine brighter than the stars and guide you toward greatness.",
+      "⚡ May this year bring strength, courage, and victories that make your heart proud.",
+      "🌠 You are destined for amazing things — keep chasing the horizon with confidence!",
+      "👀 I may not always express my feelings with words, but if you just look into my eyes, you’ll know how much I love you. 💖 Happy Birthday!",
+      "🍷 Like a fine wine, you’re only getting better with age. 🎂 Happy Birthday!",
+      "❤️ Happy birthday from the love of your life. 💕",
+      "😜 You’re definitely the one I want to annoy for the rest of my life. 🎉 Happy Birthday!"
+    ];
+
+    const song = document.getElementById("birthdaySong");
+
+    function showMessage() {
+      const container = document.getElementById('message');
+      container.innerHTML = "";
+      sentences.forEach((text, i) => {
+        setTimeout(() => {
+          const span = document.createElement("div");
+          span.className = "sentence";
+          span.textContent = text;
+          if (i === sentences.length - 1) {
+            span.classList.add("finale");
+          }
+          container.appendChild(span);
+        }, i * 3000);
+      });
+
+      // Start song at 25 seconds when button is clicked
+      song.currentTime = 25;
+      song.play();
+    }
+
+    // Stars
+    for (let i = 0; i < 30; i++) {
+      const star = document.createElement("div");
+      star.className = "star";
+      star.style.top = Math.random() * window.innerHeight + "px";
+      star.style.left = Math.random() * window.innerWidth + "px";
+      star.style.animationDuration = (2 + Math.random() * 3) + "s";
+      document.body.appendChild(star);
+    }
+
+    // Balloons
+    const colors = ["#ff4d4d", "#ffcc00", "#66ccff", "#66ff66", "#ff99cc"];
+    for (let i = 0; i < 10; i++) {
+      const balloon = document.createElement("div");
+      balloon.className = "balloon";
+      balloon.style.left = Math.random() * window.innerWidth + "px";
+      balloon.style.background = colors[Math.floor(Math.random() * colors.length)];
+      balloon.style.animationDuration = (8 + Math.random() * 5) + "s";
+      document.body.appendChild(balloon);
+    }
+  </script>
+</body>
+</html>
